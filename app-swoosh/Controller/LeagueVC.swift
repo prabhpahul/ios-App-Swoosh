@@ -10,18 +10,22 @@ import UIKit
 
 class LeagueVC: UIViewController {
 
+    var player : Player!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        player = Player()
         // Do any additional setup after loading the view.
     }
 
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
+    @IBOutlet weak var nxtBtn: BorderButton!
     
 
+    @IBAction func redirectSeague(_ sender: Any) {
+        
+        performSegue(withIdentifier: "skillVC", sender: self)
+        
+    }
     /*
     // MARK: - Navigation
 
@@ -32,4 +36,31 @@ class LeagueVC: UIViewController {
     }
     */
 
+    @IBAction func mensTapped(_ sender: Any) {
+        selectedLeague(leag: "mens")
+    }
+   
+    
+    @IBAction func womenTapped(_ sender: Any) {
+        selectedLeague(leag: "womens")
+    }
+    
+    
+    @IBAction func coedTapped(_ sender: Any) {
+        selectedLeague(leag: "coed")
+    }
+    
+    func selectedLeague(leag : String){
+        
+        player.desiredLeague = leag
+        nxtBtn.isEnabled = true
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if let skillVC = segue.destination as? SkillVC {
+            skillVC.player  = player
+        }
+    }
+    
+    
 }
